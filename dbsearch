@@ -1,0 +1,27 @@
+#!/usr/bin/python
+
+# Work in progress: User enters a movie or television series title and program returns the title, year/s, IMDB rating, and plot synopsis.
+
+import requests
+import json
+import os
+
+my_secret = os.environ['myAPI']
+
+# get the movie title from the user
+movie_title = input("Enter a movie or television series title: ")
+
+# get the movie data from the omdbapi
+# API key is hidden, but developers can obtain their own keys at https://www.omdbapi.com/
+url = "http://www.omdbapi.com/?t=" + movie_title + "&y=&plot=full&r=json&apikey=" + my_secret
+
+r = requests.get(url)
+
+# convert the json data to a python dictionary
+movie_data = json.loads(r.text)
+
+# print the movie data
+print("Title: " + movie_data["Title"])
+print("Year: " + movie_data["Year"])
+print("Rating: " + movie_data["imdbRating"])
+print("Plot: " + movie_data["Plot"])
